@@ -18,8 +18,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('login', [\App\Http\Controllers\Auth\Api\LoginController::class, 'index'])
-        ->name('api.login');
+// Create and login
 
+Route::post('login', [\App\Http\Controllers\Auth\Api\LoginController::class, 'login'])
+        ->name('api.login');
+Route::post('logout', [\App\Http\Controllers\Auth\Api\LoginController::class, 'logout'])
+        ->name('api.logout')
+        ->middleware('auth:sanctum');
 Route::post('login-register', [\App\Http\Controllers\Auth\Api\LoginController::class, 'register'])
         ->name('api.register');
+
+// Add pokemon
+
+Route::get('pokemon', [\App\Http\Controllers\PokeAddController::class, 'index'])
+        ->name('api.pokemon')
+        ->middleware('auth:sanctum');

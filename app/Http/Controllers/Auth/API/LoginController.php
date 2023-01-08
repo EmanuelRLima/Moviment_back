@@ -8,11 +8,27 @@ use App\Models\User;
 
 class LoginController extends Controller
 {
-    public function index(Request $request)
+    public function login(Request $request)
     {
+        // To-do: Validar request
+        $credentials = $request->only('email','password');
+
+        if(!auth()->attempt($credentials)) abort(401, 'Erro');
+
+        $token = auth()->user()->createToken('auth_token');
         return response()->json([
-            'sucesso' => true,
-            'data' => 'xxxx',
+            'data' => [
+                'sucesso' => 'Logado com sucesso',
+                'token' => $token->plainTextToken
+            ]
+            ]);
+    }
+
+    public function logout(){
+        auth()->user()->tokens()->delete(); //Remove todos os tokens do usuario
+        //auth()->user()->currentAccessTokens()->delete();
+        return response()->json([
+        'sucesso' => 'Deslogado com sucesso',
         ]);
     }
 
