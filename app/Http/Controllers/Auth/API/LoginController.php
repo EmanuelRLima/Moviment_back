@@ -28,7 +28,7 @@ class LoginController extends Controller
         auth()->user()->tokens()->delete(); //Remove todos os tokens do usuario
         //auth()->user()->currentAccessTokens()->delete();
         return response()->json([
-        'sucesso' => 'Deslogado com sucesso',
+        'sucesso' => 'Deslogado com sucesso!',
         ]);
     }
 
