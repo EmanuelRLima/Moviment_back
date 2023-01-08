@@ -13,12 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pokemon_user', function (Blueprint $table) {
+        Schema::create('character', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')
-              ->references('id')->on('users')->onDelete('cascade');
+             ->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('class');
+            $table->foreign('class')
+              ->references('id')->on('class')->onDelete('cascade');
+              $table->unsignedBigInteger('skil_one');
+            $table->foreign('skil_one')
+              ->references('id')->on('skils')->onDelete('cascade');  
             $table->string('image');
             $table->timestamps();
         });
@@ -31,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pokemon_user');
+        Schema::dropIfExists('character');
     }
 };
